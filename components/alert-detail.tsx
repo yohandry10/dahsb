@@ -109,13 +109,20 @@ export default function AlertDetail({
               <div>
                 <p className="text-xs font-medium text-muted-foreground">Severidad</p>
                 <p className="mt-1 text-sm font-medium text-foreground">
-                  {alert.severity}
+                  {alert.severity === 'critical' ? 'Crítico' : 
+                   alert.severity === 'high' ? 'Alto' :
+                   alert.severity === 'medium' ? 'Medio' :
+                   alert.severity === 'low' ? 'Bajo' :
+                   alert.severity === 'info' ? 'Información' : alert.severity}
                 </p>
               </div>
               <div>
                 <p className="text-xs font-medium text-muted-foreground">Estado</p>
                 <p className="mt-1 text-sm font-medium text-foreground">
-                  {alert.status}
+                  {alert.status === 'open' ? 'Abierto' :
+                   alert.status === 'acknowledged' ? 'Reconocido' :
+                   alert.status === 'resolved' ? 'Resuelto' :
+                   alert.status === 'snoozed' ? 'Pospuesto' : alert.status}
                 </p>
               </div>
             </div>

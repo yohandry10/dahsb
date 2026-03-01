@@ -75,6 +75,15 @@ export default function CustomersPage() {
     return styles[status] || styles.warning
   }
 
+  const getHealthLabel = (status: string) => {
+    switch (status) {
+      case 'healthy': return 'Saludable'
+      case 'warning': return 'Advertencia'
+      case 'critical': return 'Crítico'
+      default: return status
+    }
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border bg-card px-6 py-4">
@@ -184,7 +193,7 @@ export default function CustomersPage() {
                           {customer.health_score}
                         </span>
                         <span className={`px-2 py-0.5 rounded text-xs ${getHealthBadge(customer.health_status)}`}>
-                          {customer.health_status}
+                          {getHealthLabel(customer.health_status)}
                         </span>
                       </div>
                     </td>

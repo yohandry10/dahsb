@@ -7,8 +7,20 @@ interface AlertsFiltersProps {
   org_id: string
 }
 
-const SEVERITIES = ['critical', 'high', 'medium', 'low', 'info']
-const STATUSES = ['open', 'acknowledged', 'resolved', 'snoozed']
+const SEVERITIES = [
+  { value: 'critical', label: 'Crítico' },
+  { value: 'high', label: 'Alto' },
+  { value: 'medium', label: 'Medio' },
+  { value: 'low', label: 'Bajo' },
+  { value: 'info', label: 'Información' }
+]
+
+const STATUSES = [
+  { value: 'open', label: 'Abierto' },
+  { value: 'acknowledged', label: 'Reconocido' },
+  { value: 'resolved', label: 'Resuelto' },
+  { value: 'snoozed', label: 'Pospuesto' }
+]
 
 export default function AlertsFilters({ org_id }: AlertsFiltersProps) {
   const filters = useAlertsStore((state) => state.filters)
@@ -38,6 +50,9 @@ export default function AlertsFilters({ org_id }: AlertsFiltersProps) {
   const hasFilters =
     filters.status || filters.severity || filters.source || filters.search
 
+  const getSeverityLabel = (value: string) => SEVERITIES.find(s => s.value === value)?.label || value
+  const getStatusLabel = (value: string) => STATUSES.find(s => s.value === value)?.label || value
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -57,15 +72,15 @@ export default function AlertsFilters({ org_id }: AlertsFiltersProps) {
         <div className="space-y-2">
           {SEVERITIES.map((severity) => (
             <button
-              key={severity}
-              onClick={() => handleSeverityToggle(severity)}
+              key={severity.value}
+              onClick={() => handleSeverityToggle(severity.value)}
               className={`block w-full rounded px-3 py-2 text-left text-sm transition-colors ${
-                filters.severity === severity
+                filters.severity === severity.value
                   ? 'bg-primary/20 text-primary'
                   : 'text-muted-foreground hover:bg-accent hover:text-foreground'
               }`}
             >
-              {severity.charAt(0).toUpperCase() + severity.slice(1)}
+              {severity.label}
             </button>
           ))}
         </div>
@@ -76,15 +91,15 @@ export default function AlertsFilters({ org_id }: AlertsFiltersProps) {
         <div className="space-y-2">
           {STATUSES.map((status) => (
             <button
-              key={status}
-              onClick={() => handleStatusToggle(status)}
+              key={status.value}
+              onClick={() => handleStatusToggle(status.value)}
               className={`block w-full rounded px-3 py-2 text-left text-sm transition-colors ${
-                filters.status === status
+                filters.status === status.value
                   ? 'bg-primary/20 text-primary'
                   : 'text-muted-foreground hover:bg-accent hover:text-foreground'
               }`}
             >
-              {status.charAt(0).toUpperCase() + status.slice(1)}
+              {status.label}
             </button>
           ))}
         </div>
@@ -99,7 +114,7 @@ export default function AlertsFilters({ org_id }: AlertsFiltersProps) {
             {filters.status && (
               <div className="flex items-center justify-between rounded bg-secondary px-2 py-1">
                 <span className="text-xs text-foreground">
-                  Estado: {filters.status}
+                  Estado: {getStatusLabel(filters.status)}
                 </span>
                 <button
                   onClick={() => setFilters({ status: undefined })}
@@ -112,7 +127,7 @@ export default function AlertsFilters({ org_id }: AlertsFiltersProps) {
             {filters.severity && (
               <div className="flex items-center justify-between rounded bg-secondary px-2 py-1">
                 <span className="text-xs text-foreground">
-                  Severidad: {filters.severity}
+                  Severidad: {getSeverityLabel(filters.severity)}
                 </span>
                 <button
                   onClick={() => setFilters({ severity: undefined })}

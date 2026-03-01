@@ -74,6 +74,24 @@ export default function SupportPage() {
     return styles[priority] || styles.medium
   }
 
+  const getPriorityLabel = (priority: string) => {
+    switch (priority) {
+      case 'high': return 'Alta'
+      case 'medium': return 'Media'
+      case 'low': return 'Baja'
+      default: return priority
+    }
+  }
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'open': return 'Abierto'
+      case 'in_progress': return 'En Progreso'
+      case 'resolved': return 'Resuelto'
+      default: return status
+    }
+  }
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'open':
@@ -189,7 +207,7 @@ export default function SupportPage() {
                     <td className="p-4">
                       <div className="flex items-center gap-2">
                         {getStatusIcon(ticket.status)}
-                        <span className="text-foreground capitalize">{ticket.status.replace('_', ' ')}</span>
+                        <span className="text-foreground capitalize">{getStatusLabel(ticket.status)}</span>
                       </div>
                     </td>
                     <td className="p-4">
@@ -206,7 +224,7 @@ export default function SupportPage() {
                     </td>
                     <td className="p-4">
                       <span className={`px-2 py-1 rounded-full text-xs ${getPriorityBadge(ticket.priority)}`}>
-                        {ticket.priority}
+                        {getPriorityLabel(ticket.priority)}
                       </span>
                     </td>
                     <td className="p-4">

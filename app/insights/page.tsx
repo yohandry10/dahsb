@@ -251,14 +251,14 @@ export default function ChatbotInsightsPage() {
                       </td>
                       <td className="p-4">
                         {req.was_supported ? (
-                          <span className="text-green-500">Yes</span>
+                          <span className="text-green-500">Sí</span>
                         ) : (
                           <span className="text-red-500">No</span>
                         )}
                       </td>
                       <td className="p-4">
                         {req.was_escalated ? (
-                          <span className="text-yellow-500">Yes</span>
+                          <span className="text-yellow-500">Sí</span>
                         ) : (
                           <span className="text-muted-foreground">No</span>
                         )}

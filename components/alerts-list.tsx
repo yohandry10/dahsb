@@ -27,6 +27,27 @@ const getSeverityColor = (severity: string) => {
   }
 }
 
+const getSeverityLabel = (severity: string) => {
+  switch (severity) {
+    case 'critical': return 'Crítico'
+    case 'high': return 'Alto'
+    case 'medium': return 'Medio'
+    case 'low': return 'Bajo'
+    case 'info': return 'Información'
+    default: return severity
+  }
+}
+
+const getStatusLabel = (status: string) => {
+  switch (status) {
+    case 'open': return 'Abierto'
+    case 'acknowledged': return 'Reconocido'
+    case 'resolved': return 'Resuelto'
+    case 'snoozed': return 'Pospuesto'
+    default: return status
+  }
+}
+
 const getStatusIcon = (status: string) => {
   switch (status) {
     case 'open':
@@ -121,7 +142,7 @@ export default function AlertsList({
                     alert.severity
                   )}`}
                 >
-                  {alert.severity}
+                  {getSeverityLabel(alert.severity)}
                 </div>
               </div>
 
@@ -130,7 +151,7 @@ export default function AlertsList({
                   {alert.source}
                 </span>
                 <span>{format(new Date(alert.created_at), 'MMM d, h:mm a')}</span>
-                <span className="text-muted-foreground">Estado: {alert.status}</span>
+                <span className="text-muted-foreground">Estado: {getStatusLabel(alert.status)}</span>
               </div>
 
               {alert.tags && alert.tags.length > 0 && (
